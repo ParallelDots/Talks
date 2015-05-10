@@ -1,0 +1,55 @@
+Title:  Making a contextual recommendation engine using Python and Deep Learning at ParallelDots
+Category: Scientific Computing
+Duration: 40 minutes
+
+Description:
+ 
+One of the various recommendation engines paralleldots offers to online publishers is its very accurate related posts plugin.
+This talks walks through our technology decisions and algorithms choices while we decided to write a enhanced accuracy/cost optimized search engine which searches for related documents.
+Join us to learn what Deep Learning is, how it enhances the accuracy over traditional algorithms and how we incorporated it into production.
+
+
+Audience:
+
+This talk is intended for developers using Python for Data Analysis. Knowledge of Numpy & basic Machine Learning will help understand talk better, but its not essential. The talk assumes no previous experience in Deep Learning.
+
+Level: Beginner
+
+Objectives:
+
+Attendees will walk out knowing what is Deep Learning, types of Deep Learning algorithms and various libraries to use them in Python.
+They will also learn about how we found Deep Learning techniques better than traditional topic models and how we use it to make a search engine for related documents.
+We will also talk about the hacks which we used to scale up the web services to handle thousands of concurrent recommendations.
+
+Detailed Description:
+
+1. Making a Recommendation Engine at ParallelDots (4 minutes)
+  a. Why normal full-text search will not work: The problem of incorrect tagging and slow search queries.
+  b. ParallelDots' MVP with Topic Models: Issues with accuracy and scaling.
+  c. Decision to use Deep Learning and aims of the new architecture (Not enough funds for distributed system, search related posts from millions of documents in reasonable time)
+
+2. Basics of Deep Learning ( 12 min )
+  a. Deep Neural Networks
+  b. Types of Deep Neural Networks. Convolutional, DBNs, Recurrent and Recursive. How do they differ in structure, types of neurons and training.
+  c. Backpropogation and its variants
+  d. Features of various Deep Learning libraries in Python. Theano, PyLearn2, theanets, lasagne, kayak, pybrain.
+  
+3. Deep Learning in NLP ( 10 min )
+  a. Solving problem of high-dimensionality using word embeddings. 
+  b. Common approaches to word embedding.
+  c. Models we use : Named Entity Recognition with Neural Nets
+  d. Models we use: Combining word embeddings using heuristics and recursive neural networks.
+
+4. Search Engine ( 10 min )
+  a. Using Search Data Structures to convert search related posts operations from O(n) to O(log(n))
+  b. Space Partitioning Trees : Search for nearest Neighbours. Examples of such trees: KD-Tree / Ball Tree / VP Tree
+  c. Why we chose VP Tree ? What libraries to use to code up in Python ?
+  d. Parallelization. Data Parallel Python's multiprocessing parallelization not the best, working towards a shared memory parallel version.
+  
+5. Scaling up system ( 2 min )
+  a. Hacks to scale up recommendations.
+  b. Using golang's channels to unique requests.
+  
+6. Q&A ( 2 min )
+  
+
