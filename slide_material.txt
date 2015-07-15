@@ -1,0 +1,45 @@
+Slide 1:
+
+ParallelDots is an Artificial Intelligence company which makes innovative products for developers and enterprises.
+Deep Learning algorithms as a service, where we train our algorithms on user datasets and help them power their apps using these algorithms as an API.
+
+We have developed the following algorithms:
+1.Semantic Proximity
+2.Entity Extraction
+3.Taxonomy
+4.Sentiment Analysis.
+
+So today's talk will be about how we have built a contextual recommendation engine using a combination of these technologies. This contextual posts plugin includes a related posts plugin, a timeline and soon to come tagclouds.
+
+
+Slide 2:
+
+There are numerous related post plugins already, but they fail at scale. The recommendations are often garbage and sometimes not visible at all. This happens due to their TFIDF based search algo and their very generic SEO tags.
+
+Aim of this recommendation engine is to build a solution that is more accurate, cheaper and easier to deploy.
+
+Slide 3:
+
+We made our MVP with Topic Modelling algortihms like LSA, incremental LDA, but they were not accurate enough at due to high grandularity in data and were never scalable to begin with. Hence we shifted to this Deep Learning based approach.
+
+
+So, our current solution works in the follwoing way:
+
+1. First we train Word Embeddings for all the words. Word Embeddings are dense low dimensional representation for each word. You can think of the word embedidngs as thought vectors. So, think of it this way - say you have a thought vecotr/representation of following words 'king', 'queen' and 'man'. Now if you subtract, the thought vector of 'man' from that of the word 'king' you will ideally reach near the though vector of the word 'queen'.
+2. Now we combine thse word thought vectors into phrase/document thought vectors and there are two different ways to approach this. If we want documents to be in a hyperspace where documents with common entities are close, we use some heuristics over the word thought vectors. When we want the combined vector to have close semantic similarity, we use a Recursive Neural Network to combine them. Depending on the necessity we choose our approach.
+3. Now that we have a representation for each document, we need to search the closest document to an incoming one as soon as possible. One approach was to use dostributed computing for this, but as it turns out, the costs involved were high. SO we wrote an efficient implememtation of a space partitioning tree algorithm to search for nearest neighbors.
+4. The last but not not the least problem was the insane spikes on these high traffic news websites. Before you can get related posts for an article and cache it, the concurrent traffic would overwhelm you. SO we needed a customised pub-sub mechanism, which could deduplicate these requests and reduce load on machine learning server. We accomplished this using channels in GoLang.
+
+
+
+Slide 4 (Word Embeddings):
+
+1. There are some Open Sourced implementations of WOrd Embeddings. The most popular is Word2Vec by Google. Google recently patented it, and despite its good record in patents, it makes people anxious. We have hence tried to come up with our own implementation of word embeddings and open sourced it. 
+It is basically an autoencoder which tries to reconstruct the co-occurance matrix.
+Our implementation requires comparatively lower resources like RAM and can be trained even on a slow CPU. This means we can use it on very large datasets with ease.
+2. We are furthur evolving to use character level models where we wont even need word embeddings.
+
+
+Slide 5 (Deep Learning Models we use) 
+
+
