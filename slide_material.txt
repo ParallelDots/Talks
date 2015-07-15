@@ -40,6 +40,41 @@ Our implementation requires comparatively lower resources like RAM and can be tr
 2. We are furthur evolving to use character level models where we wont even need word embeddings.
 
 
-Slide 5 (Deep Learning Models we use) 
+Slide 5 (Deep Learning Models we use):
+
+As I mentioned earlier we have 4 different Deep Learning Models. In this search engine we use Recursive Neural Network based semantic similarity and taxonomy or some heuristics.
+
+The Recursive Neural Network we use minimizes reconstruction cost at various nodes of the tree of each phrase, where it tries to come up with a set of weights (or you can say rules) to make tree for all phrases.
+
+In case we are interested to get aggregations of word embddings where entities are given more priority than semantic meaning , we use some heuristics to combine them.
+
+There is a recursive neural network which looks in a neighborhood of Word Embeddings to find named entities in it.
+
+There are other models that we have released as APIs but do not use in the recommendation engine. These include a convolutional Neural net which convolves N-Grams of Word Embeddings to predict sentiment.
+
+ 
+
+Slide 6(VP Tree):
+
+Now about Space Patitioning Trees. The logic is to recursively partition the search space to reach to an area where all relevant points are located. Building such a tree with documents drastically reduces the number of distance calculations. We developed our own fast implementation of Vantage Point Tree in NumPy to use in system.
+
+Right now we parallelize it but dividing data into multiple buckets and loading VP Tree on each bucket onto one core and then parallely search on these VP Trees using Python's multiprocessing. This makes our search become almost O(log N). IN future we plan to make a shared memory based parallel implementation which would make our algorithm faster that is true O(log N).
+
+Slide 7 (Web Service):
+
+FInally this is about how we handle the insane traffic of news websites. We are deploying these solutions on publishers who serve hundred of millions of impressions per month and there articles go viral as soon as they put it onsocial media. so our MVP which was aimed at caching recommendation for articles and serving them again and again was overwhelmed. 
+We found out that the traffic of news websites is huge, but they are directed to a certain set of unique articles. Now we needed a method to recognize what are these unique articles and generate recommendations only for them. We wrote a system using Golang's channels to do this concurrently while we get re	quests for rcommendations.
+
+Slide 8 (Basics of Deep Learning):
+
+So now I will talk about basics of Deep Learning and how we implement the algorithms I mentioned before this. Deep Learning is a multiple layered Neural net, where each layer is separated by an activation function.
+
+
+
+
+
+
+ 
+
 
 
