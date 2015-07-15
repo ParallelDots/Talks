@@ -34,21 +34,21 @@ So, our current solution works in the follwoing way:
 
 Slide 4 (Word Embeddings):
 
-1. There are some Open Sourced implementations of WOrd Embeddings. The most popular is Word2Vec by Google. Google recently patented it, and despite its good record in patents, it makes people anxious. We have hence tried to come up with our own implementation of word embeddings and open sourced it. 
+1. There are some Open Sourced implementations of WOrd Embeddings. The most popular is Word2Vec by Google. But to everyone's surprise - Google just recently patented it. It got us worried and in that state of mind we ended up developing our own implementation of word embeddings. We have open sourced it and people can start using it from our Github page. 
 It is basically an autoencoder which tries to reconstruct the co-occurance matrix.
-Our implementation requires comparatively lower resources like RAM and can be trained even on a slow CPU. This means we can use it on very large datasets with ease.
-2. We are furthur evolving to use character level models where we wont even need word embeddings.
+The main advantage of our implementation of word embeddings is the it requires much lower resources like RAM and can be trained even on a slow CPU. This means we can use it on very large datasets with ease.
+2. We are furthur evolving to use character level models where we wont even need these word embeddings.
 
 
 Slide 5 (Deep Learning Models we use):
 
-As I mentioned earlier we have 4 different Deep Learning Models. In this search engine we use Recursive Neural Network based semantic similarity and taxonomy or some heuristics.
+As I mentioned earlier we have 4 different Deep Learning technologies. To find related context we either use Recursive Neural Network or some heuristics depending on the necessity.
 
 The Recursive Neural Network we use minimizes reconstruction cost at various nodes of the tree of each phrase, where it tries to come up with a set of weights (or you can say rules) to make tree for all phrases.
 
-In case we are interested to get aggregations of word embddings where entities are given more priority than semantic meaning , we use some heuristics to combine them.
+In case we are interested to get aggregations of word embeddings where entities are given more priority than semantic meaning , we use some heuristics to combine them.
 
-There is a recursive neural network which looks in a neighborhood of Word Embeddings to find named entities in it.
+But before we use heuristics, there's another different recursive neural network which looks in a neighborhood of Word Embeddings to find named entities in it.
 
 There are other models that we have released as APIs but do not use in the recommendation engine. These include a convolutional Neural net which convolves N-Grams of Word Embeddings to predict sentiment.
 
@@ -56,21 +56,21 @@ There are other models that we have released as APIs but do not use in the recom
 
 Slide 6(VP Tree):
 
-Now about Space Patitioning Trees. The logic is to recursively partition the search space to reach to an area where all relevant points are located. Building such a tree with documents drastically reduces the number of distance calculations. We developed our own fast implementation of Vantage Point Tree in NumPy to use in system.
+Now about Space Patitioning Trees. The logic is to recursively partition the search space to reach to an area where all relevant points are located. So, we again developed our own fast implementation of Vantage Point Tree in NumPy to use in system. Our VP tree of documents drastically reduces the number of distance calculations making it much faster.
 
-Right now we parallelize it but dividing data into multiple buckets and loading VP Tree on each bucket onto one core and then parallely search on these VP Trees using Python's multiprocessing. This makes our search become almost O(log N). IN future we plan to make a shared memory based parallel implementation which would make our algorithm faster that is true O(log N).
+Right now we parallelize it by dividing data into multiple buckets and loading VP Tree on each bucket onto one core and then parallely search on these VP Trees using Python's multiprocessing. This makes our search become almost O(log N). IN future we plan to make a shared memory based parallel implementation which would make our algorithm faster that is true O(log N).
 
 Slide 7 (Web Service):
 
-FInally this is about how we handle the insane traffic of news websites. We are deploying these solutions on publishers who serve hundred of millions of impressions per month and there articles go viral as soon as they put it onsocial media. so our MVP which was aimed at caching recommendation for articles and serving them again and again was overwhelmed. 
-We found out that the traffic of news websites is huge, but they are directed to a certain set of unique articles. Now we needed a method to recognize what are these unique articles and generate recommendations only for them. We wrote a system using Golang's channels to do this concurrently while we get re	quests for rcommendations.
+FInally coming to how we handle the insane traffic of news websites. We are deploying these solutions on publishers who serve hundreds of millions of impressions per month and there articles go viral as soon as they are shared on social media. So our simple MVP which was aimed at caching recommendation for articles and serving them again and again was overwhelmed by huge spikes in traffic. 
+We realized that this traffic is mostly directed to a certain set of unique articles. Now we needed a method to recognize what are these unique articles and generate recommendations only for them. We wrote a system using Golang's channels to do this concurrently while we get requests for rcommendations. So now we can easily handle 5000 concurrent users on a very small machine.
 
 Slide 8 (Basics of Deep Learning):
 
-So now I will talk about basics of Deep Learning and how we implement the algorithms I mentioned before this. Deep Learning is a multiple layered Neural net, where each layer is separated by an activation function.
+This was more or less everything about our technology. I'd now like to walk you through the very basics of Deep Learning and how do you actually implement these algorithms. Deep Learning is a multiple layered Neural net, where each layer is separated by an activation function.
 
 Slide 9 (Types of Neural Networks) :
-COnvolutional Neural Networks try to model human visual cortex. They try to optimize various layers of Convolution Matrices over images/text to extract higher level of abstractions. So these networks can extract abstract features from media, like tyoes of eyes from images.
+Convolutional Neural Networks try to model human visual cortex. They try to optimize various layers of Convolution Matrices over images/text to extract higher level of abstractions. So these networks can extract abstract features from media, like human eyes in an image.
 
 RBMs (and DBNs) try to model probabilistic graphical models as neural networks. 
 
@@ -80,13 +80,5 @@ Recurrent Neural network try to model arbitrary length chains and Recursive Neur
 Slide 9 (Vocab):
 
 Here are some more terms related to neural nets. they can be divided into some type of architecture, neural unit or optimization method. If there was more time, I would have discussed each in detail.
- 
 
-
-
-
-
- 
-
-
-
+Slide 10(Implementations):
